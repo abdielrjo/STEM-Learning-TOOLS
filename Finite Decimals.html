@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Decimales Finitos — STEM Learning Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* FCB-inspired monochromatic blue palette — brand */
+    --blue-900: #001F4D;
+    --blue-800: #002F73;
+    --blue-700: #004D98;
+    --blue-600: #1B5FAE;
+    --blue-500: #3D7AC2;
+    --blue-400: #6FA0DC;
+    --blue-300: #A8C6EC;
+    --blue-200: #D1E2F4;
+    --blue-100: #E8F1FA;
+    --blue-50:  #F4F8FC;
+
+    /* theme tokens — light (default fallback) */
+    --bg-top: #E8F1FA;
+    --bg-bot: #C2D8EE;
+    --panel: #ffffff;
+    --panel-alt: #F4F8FC;
+    --text-strong: var(--blue-900);
+    --ink: #0E2238;
+    --ink-2: #3A4F6B;
+    --ink-3: #7F8FA6;
+    --rule: rgba(0, 77, 152, 0.14);
+
+    --chip-bg: var(--blue-100);
+    --chip-fg: var(--blue-800);
+    --chip-ghost-border: var(--blue-300);
+    --chip-ghost-fg: var(--blue-700);
+
+    --badge-bg: var(--blue-50);
+    --badge-border: var(--blue-300);
+    --badge-num: var(--blue-800);
+    --badge-lbl: var(--blue-700);
+
+    --shadow-card: 0 4px 14px rgba(0, 31, 77, 0.10);
+    --shadow-card-hover: 0 14px 32px rgba(0, 31, 77, 0.20);
+    --shadow-topbar: 0 2px 10px rgba(0, 31, 77, 0.05);
+    --shadow-hero: 0 6px 22px rgba(0, 31, 77, 0.08);
+
+    --meta-bg: rgba(255, 255, 255, 0.7);
+    --hero-accent: var(--blue-700);
+    --logo-sub: var(--blue-600);
+  }
+
+  html[data-theme="dark"] {
+    --bg-top: #06101F;
+    --bg-bot: #0E2243;
+    --panel: #142845;
+    --panel-alt: #0F1E37;
+    --text-strong: #F0F6FF;
+    --ink: #E6EEF9;
+    --ink-2: #AEC1DA;
+    --ink-3: #758AA8;
+    --rule: rgba(120, 170, 230, 0.18);
+
+    --chip-bg: rgba(74, 144, 226, 0.18);
+    --chip-fg: #C2D8F0;
+    --chip-ghost-border: rgba(168, 198, 236, 0.32);
+    --chip-ghost-fg: #C2D8F0;
+
+    --badge-bg: rgba(74, 144, 226, 0.10);
+    --badge-border: rgba(108, 154, 220, 0.40);
+    --badge-num: #E0ECFA;
+    --badge-lbl: #A8C6EC;
+
+    --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-card-hover: 0 14px 32px rgba(0, 0, 0, 0.65);
+    --shadow-topbar: 0 2px 10px rgba(0, 0, 0, 0.40);
+    --shadow-hero: 0 6px 22px rgba(0, 0, 0, 0.45);
+
+    --meta-bg: rgba(255, 255, 255, 0.06);
+    --hero-accent: var(--blue-500);
+    --logo-sub: var(--blue-400);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Comfortaa", "Quicksand", "Trebuchet MS", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    transition: background 240ms ease, color 240ms ease;
+  }
+  .mono { font-family: "Fira Mono", ui-monospace, monospace; }
+
+  /* ── Top bar ──────────────────────────────────── */
+  .topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: var(--shadow-topbar);
+    transition: background 240ms ease;
+  }
+  .topbar-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 700; font-size: 18px;
+    letter-spacing: -0.005em;
+    color: var(--text-strong);
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--blue-700);
+    display: grid; place-items: center;
+    color: white;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.18), 0 2px 6px rgba(0, 31, 77, 0.22);
+    position: relative;
+  }
+  .logo-mark svg { width: 22px; height: 22px; }
+  .logo small {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--logo-sub);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .logo .stack { display: flex; flex-direction: column; line-height: 1.05; }
+  .nav {
+    display: flex; gap: 4px; align-items: center;
+  }
+  .nav a {
+    text-decoration: none;
+    color: var(--ink-2);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    transition: background 160ms ease, color 160ms ease;
+  }
+  .nav a:hover { background: var(--blue-100); color: var(--blue-800); }
+  .nav a.active { background: var(--blue-700); color: #fff; }
+
+  /* Theme toggle */
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--panel-alt);
+    color: var(--ink-2);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: background 160ms ease, color 160ms ease, transform 200ms ease;
+  }
+  .theme-toggle:hover { color: var(--text-strong); transform: rotate(-12deg); }
+  .theme-toggle svg { width: 18px; height: 18px; display: block; }
+  .theme-toggle .icon-moon { display: none; }
+  .theme-toggle .icon-sun  { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+
+  /* ── Page wrap ────────────────────────────────── */
+  .page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+  }
+
+  /* ── Breadcrumb / class header ───────────────────── */
+  .crumbs {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--blue-800);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .crumbs .sep { color: var(--blue-400); }
+  .crumbs .here { color: var(--blue-900); }
+
+  /* ── Hero panel ───────────────────────────────── */
+  .hero {
+    background: var(--panel);
+    border-radius: 22px;
+    padding: 34px 38px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: center;
+    box-shadow: var(--shadow-hero);
+    margin-bottom: 36px;
+    border-top: 4px solid var(--hero-accent);
+    transition: background 240ms ease;
+  }
+  .hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
+    color: var(--text-strong);
+    text-wrap: balance;
+  }
+  .hero p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+  .hero-badge {
+    background: var(--badge-bg);
+    border: 2px solid var(--badge-border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: center;
+    min-width: 180px;
+  }
+  .hero-badge .num {
+    font-family: "Fira Mono", monospace;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--badge-num);
+    line-height: 1;
+  }
+  .hero-badge .lbl {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--badge-lbl);
+    margin-top: 8px;
+    font-weight: 600;
+  }
+
+  /* ── Section header ────────────────────────────── */
+  .section-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 6px 4px 18px;
+  }
+  .section-head h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+  .section-head .meta {
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--meta-bg);
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+  }
+
+  /* ── Sim grid ─────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .sim {
+    background: var(--panel);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-card);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1), box-shadow 220ms ease, background 240ms ease;
+    position: relative;
+    border: 1px solid var(--rule);
+  }
+  .sim:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+  .sim:hover .play { transform: scale(1.08); }
+  .sim:hover .thumb-bg::after { opacity: 0.22; }
+
+  /* Thumbnail area — all cards share the same blue family */
+  .thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--rule);
+  }
+  .thumb-bg {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    /* extra bottom-right padding reserves a safe zone for the play button */
+    padding: 18px 86px 70px 18px;
+    background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-700) 55%, var(--blue-800) 100%);
+  }
+  .thumb-bg::before {
+    /* subtle grid texture */
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+  }
+  .thumb-bg::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 28%, rgba(255,255,255,0.35) 0%, transparent 55%);
+    opacity: 0.14;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+  }
+
+  /* Play button — white face with blue triangle, anchored bottom-right */
+  .play {
+    position: absolute;
+    right: 16px; bottom: 16px;
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: white;
+    display: grid; place-items: center;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.28), inset 0 -3px 0 rgba(0, 77, 152, 0.18);
+    transition: transform 220ms cubic-bezier(.2,.7,.2,1);
+    transform-origin: center;
+    z-index: 3;
+  }
+  .play::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 18px solid var(--blue-700);
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    margin-left: 5px;
+  }
+
+  /* Card body */
+  .body {
+    padding: 18px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .row {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .chip {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--chip-bg);
+    color: var(--chip-fg);
+  }
+  .chip.ghost {
+    background: transparent;
+    border: 1px solid var(--chip-ghost-border);
+    color: var(--chip-ghost-fg);
+  }
+  .num-chip {
+    font-family: "Fira Mono", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-3);
+    margin-left: auto;
+  }
+  .sim-title {
+    margin: 4px 0 2px;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+    color: var(--text-strong);
+  }
+  .sim-desc {
+    color: var(--ink-2);
+    font-size: 14.5px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ── Thumbnail illustrations ───────────────────── */
+  .illus {
+    font-family: "Fira Mono", monospace;
+    color: white;
+    text-align: center;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.22);
+    user-select: none;
+    line-height: 1.1;
+    position: relative;
+  }
+  .illus .big {
+    font-size: clamp(34px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .illus .sub {
+    font-size: 13px;
+    margin-top: 10px;
+    opacity: 0.88;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .illus sup { font-size: 0.58em; vertical-align: super; }
+  .decpt { color: #ffd54a; } /* small warm dot kept tiny, only on the decimal point */
+
+  /* card 1 — typeset fraction = decimal */
+  .frac-line {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px;
+    font-size: clamp(26px, 3.4vw, 36px);
+    font-weight: 700;
+  }
+  .frac-line .eq-sign {
+    font-size: 0.7em;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+  .frac-typeset {
+    display: inline-flex; flex-direction: column; align-items: center;
+    line-height: 1.05;
+  }
+  .frac-typeset .num-f {
+    padding: 0 10px 5px;
+    border-bottom: 2.5px solid white;
+  }
+  .frac-typeset .den-f {
+    padding: 5px 10px 0;
+  }
+  .frac-typeset sup { font-size: 0.62em; vertical-align: super; line-height: 0; }
+
+  /* card 1 — fraction-builder game (legacy, unused) */
+  .frac-game {
+    display: flex; align-items: center; gap: 18px; justify-content: center;
+  }
+  .frac-stack {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .slot {
+    background: rgba(255,255,255,0.96);
+    color: var(--blue-800);
+    padding: 6px 14px 7px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 22px;
+    box-shadow: 0 2px 0 rgba(0, 31, 77, 0.18), inset 0 -2px 0 rgba(0, 31, 77, 0.08);
+    display: inline-flex; align-items: center; gap: 8px;
+    text-shadow: none;
+    line-height: 1;
+    font-family: "Fira Mono", monospace;
+  }
+  .slot sup { font-size: 0.62em; vertical-align: super; line-height: 0; }
+  .slot .caret {
+    font-size: 11px;
+    opacity: 0.55;
+    transform: translateY(1px);
+  }
+  .bar { width: 84px; height: 2.5px; background: white; border-radius: 2px; }
+  .arrow-eq {
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    opacity: 0.92;
+  }
+  .result-dec {
+    font-size: clamp(32px, 4.4vw, 44px);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  /* card 1 — place value columns */
+  .columns {
+    display: flex; gap: 6px; justify-content: center; align-items: flex-end;
+    margin-top: 12px;
+  }
+  .columns .col {
+    width: 30px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 6px 6px 0 0;
+    color: var(--blue-800);
+    font-weight: 700;
+    font-size: 16px;
+    display: grid; place-items: center;
+    padding: 6px 0 8px;
+    text-shadow: none;
+  }
+  .columns .col.h3 { height: 38px; }
+  .columns .col.h7 { height: 64px; }
+  .columns .col.h5 { height: 54px; }
+
+  /* card 2 — equivalence stack */
+  .equiv {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px;
+    font-size: clamp(26px, 3.4vw, 36px);
+    font-weight: 700;
+  }
+  .equiv .eq-sign {
+    font-size: 0.7em;
+    font-weight: 400;
+    opacity: 0.7;
+    line-height: 0.6;
+  }
+
+  /* card 3 — decimal shift */
+  .shift-row {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    font-size: clamp(26px, 3.4vw, 38px);
+    font-weight: 700;
+    flex-wrap: wrap;
+  }
+  .shift-row .arr {
+    font-size: 26px;
+    opacity: 0.92;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 600;
+  }
+
+  /* card 4 — big-to-compact */
+  .compact {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .compact .huge {
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    opacity: 0.82;
+  }
+  .compact .squeeze {
+    font-size: clamp(26px, 3.4vw, 36px);
+    font-weight: 700;
+  }
+  .compact .arrow-down {
+    width: 0; height: 0;
+    border-top: 10px solid rgba(255,255,255,0.85);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+  }
+
+  /* ── Footer ──────────────────────────────────── */
+  footer {
+    margin-top: 44px;
+    padding: 22px 6px 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 500;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  footer .left { display: flex; gap: 8px; align-items: center; }
+  footer .right { color: var(--ink-3); font-family: "Fira Mono", monospace; font-size: 12px; }
+
+  /* ── Responsive ───────────────────────────────── */
+  @media (max-width: 820px) {
+    .page { padding: 24px 16px 56px; }
+    .hero { grid-template-columns: 1fr; padding: 24px; }
+    .grid { grid-template-columns: 1fr; gap: 16px; }
+    .topbar-inner { padding: 12px 16px; }
+    .nav a { padding: 6px 10px; font-size: 13px; }
+    .play { width: 50px; height: 50px; right: 12px; bottom: 12px; }
+    .play::after { border-left-width: 16px; border-top-width: 10px; border-bottom-width: 10px; margin-left: 4px; }
+    .logo small { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo">
+        <div class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="2.4" fill="white" stroke="none"/>
+            <ellipse cx="12" cy="12" rx="9" ry="3.6"/>
+            <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/>
+          </svg>
+        </div>
+        <div class="stack">
+          <span>STEM Learning Tools</span>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Principal" hidden></nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Cambiar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page" data-screen-label="Hub">
+
+    <!-- Hero panel -->
+    <section class="hero">
+      <div>
+        <h1>Decimales finitos, explorados paso a paso.</h1>
+        <p>Cuatro actividades interactivas que construyen el camino hacia la notación científica: desde la definición de un decimal finito, pasando por sus representaciones alternativas y la multiplicación por potencias de diez, hasta el orden de magnitud y la notación científica.</p>
+      </div>
+      <div class="hero-badge">
+        <div class="num">0.375</div>
+        <div class="lbl">un decimal finito</div>
+      </div>
+    </section>
+
+    <!-- Section header -->
+    <div class="section-head">
+      <h2>Elige una actividad</h2>
+      <span class="meta">4 actividades</span>
+    </div>
+
+    <!-- Sim grid -->
+    <nav class="grid" aria-label="Actividades">
+
+      <!-- 01 Definition -->
+      <a class="sim" href="modules/definicion.html" data-screen-label="Card · Definición">
+        <div class="thumb">
+          <div class="thumb-bg">
+            <div class="illus">
+              <div class="frac-line" aria-hidden="true">
+                <span class="frac-typeset">
+                  <span class="num-f">375</span>
+                  <span class="den-f">10<sup>3</sup></span>
+                </span>
+                <span class="eq-sign">=</span>
+                <span>0<span class="decpt">.</span>375</span>
+              </div>
+              <div class="sub">una fracción con denominador 10ⁿ</div>
+            </div>
+          </div>
+          <div class="play" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <div class="row">
+            <span class="chip">01 · Definición</span>
+            <span class="chip ghost">Juego</span>
+            <span class="num-chip">~5 min</span>
+          </div>
+          <h3 class="sim-title">¿Qué es un decimal finito?</h3>
+          <p class="sim-desc">Elige el numerador entero y la potencia de 10 del denominador y descubre el decimal que generan — o haz el camino inverso, desde el decimal a la fracción. Así surge la definición.</p>
+        </div>
+      </a>
+
+      <!-- 02 Alternative notation -->
+      <a class="sim" href="modules/representacion-alternativa.html" data-screen-label="Card · Representación Alternativa">
+        <div class="thumb">
+          <div class="thumb-bg">
+            <div class="illus">
+              <div class="equiv" aria-hidden="true">
+                <span>12<span class="decpt">.</span>345</span>
+                <span>12345 × 10<sup>−3</sup></span>
+              </div>
+              <div class="sub">un valor · varias formas</div>
+            </div>
+          </div>
+          <div class="play" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <div class="row">
+            <span class="chip">02 · Representación</span>
+            <span class="chip ghost">Equivalencia</span>
+            <span class="num-chip">~6 min</span>
+          </div>
+          <h3 class="sim-title">Representación alternativa</h3>
+          <p class="sim-desc">Todo decimal finito se puede escribir como un entero multiplicado por una potencia no positiva de 10. Cambia entre las formas equivalentes.</p>
+        </div>
+      </a>
+
+      <!-- 03 Powers of ten -->
+      <a class="sim" href="modules/potencias-de-diez.html" data-screen-label="Card · Potencias de Diez">
+        <div class="thumb">
+          <div class="thumb-bg">
+            <div class="illus">
+              <div class="equiv" aria-hidden="true">
+                <span>0<span class="decpt">.</span>0581 × 10<sup>3</sup></span>
+                <span class="eq-sign">=</span>
+                <span>58<span class="decpt">.</span>1</span>
+              </div>
+              <div class="sub">el punto decimal se desplaza</div>
+            </div>
+          </div>
+          <div class="play" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <div class="row">
+            <span class="chip">03 · Operación</span>
+            <span class="chip ghost">Leyes de exponentes</span>
+            <span class="num-chip">~7 min</span>
+          </div>
+          <h3 class="sim-title">Multiplicación por potencias de 10</h3>
+          <p class="sim-desc">Multiplicar o dividir un decimal finito por 10ᵏ mueve el punto decimal k posiciones. Los dígitos permanecen; cambia la escala.</p>
+        </div>
+      </a>
+
+      <!-- 04 Scientific notation -->
+      <a class="sim" href="modules/notacion-cientifica.html" data-screen-label="Card · Notación Científica">
+        <div class="thumb">
+          <div class="thumb-bg">
+            <div class="illus compact">
+              <div class="huge">602&nbsp;200&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000&nbsp;000</div>
+              <div class="arrow-down" aria-hidden="true"></div>
+              <div class="squeeze">6<span class="decpt">.</span>022 × 10<sup>23</sup></div>
+              <div class="sub">forma compacta · cualquier escala</div>
+            </div>
+          </div>
+          <div class="play" aria-hidden="true"></div>
+        </div>
+        <div class="body">
+          <div class="row">
+            <span class="chip">04 · Notación científica</span>
+            <span class="chip ghost">+ Orden de magnitud</span>
+            <span class="num-chip">~8 min</span>
+          </div>
+          <h3 class="sim-title">Notación científica</h3>
+          <p class="sim-desc">Combina las ideas anteriores con el orden de magnitud para escribir cualquier decimal finito como c · 10ⁿ, con 1 ≤ c &lt; 10.</p>
+        </div>
+      </a>
+
+    </nav>
+
+    <footer>
+      <span class="left">STEM Learning Tools · Creado por Abdiel Ríos</span>
+      <span class="right">v0.1</span>
+    </footer>
+
+  </main>
+
+  <script>
+    (function() {
+      const root = document.documentElement;
+      const KEY = 'sltools-theme';
+      try {
+        const saved = localStorage.getItem(KEY);
+        if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+      } catch (e) {}
+      const btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>

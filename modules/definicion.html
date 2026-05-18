@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Definición · Decimales Finitos — STEM Learning Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Fira+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --blue-900: #001F4D;
+    --blue-800: #002F73;
+    --blue-700: #004D98;
+    --blue-600: #1B5FAE;
+    --blue-500: #3D7AC2;
+    --blue-400: #6FA0DC;
+    --blue-300: #A8C6EC;
+    --blue-200: #D1E2F4;
+    --blue-100: #E8F1FA;
+    --blue-50:  #F4F8FC;
+
+    /* light defaults */
+    --bg-top: #E8F1FA;
+    --bg-bot: #C2D8EE;
+    --panel: #ffffff;
+    --panel-alt: #F4F8FC;
+    --text-strong: var(--blue-900);
+    --ink: #0E2238;
+    --ink-2: #3A4F6B;
+    --ink-3: #7F8FA6;
+    --rule: rgba(0, 77, 152, 0.14);
+
+    --chip-bg: var(--blue-100);
+    --chip-fg: var(--blue-800);
+    --chip-ghost-border: var(--blue-300);
+    --chip-ghost-fg: var(--blue-700);
+
+    --shadow-card: 0 4px 14px rgba(0, 31, 77, 0.10);
+    --shadow-card-hover: 0 14px 32px rgba(0, 31, 77, 0.20);
+    --shadow-topbar: 0 2px 10px rgba(0, 31, 77, 0.05);
+    --shadow-hero: 0 6px 22px rgba(0, 31, 77, 0.08);
+
+    --meta-bg: rgba(255, 255, 255, 0.7);
+    --hero-accent: var(--blue-700);
+    --logo-sub: var(--blue-600);
+
+    --cta-bg: var(--blue-700);
+    --cta-fg: #ffffff;
+    --cta-hover: var(--blue-800);
+
+    --quote-bg: var(--blue-50);
+    --quote-border: var(--blue-200);
+
+    --gold: #d4a843;
+  }
+  html[data-theme="dark"] {
+    --bg-top: #06101F;
+    --bg-bot: #0E2243;
+    --panel: #142845;
+    --panel-alt: #0F1E37;
+    --text-strong: #F0F6FF;
+    --ink: #E6EEF9;
+    --ink-2: #AEC1DA;
+    --ink-3: #758AA8;
+    --rule: rgba(120, 170, 230, 0.18);
+
+    --chip-bg: rgba(74, 144, 226, 0.18);
+    --chip-fg: #C2D8F0;
+    --chip-ghost-border: rgba(168, 198, 236, 0.32);
+    --chip-ghost-fg: #C2D8F0;
+
+    --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-card-hover: 0 14px 32px rgba(0, 0, 0, 0.65);
+    --shadow-topbar: 0 2px 10px rgba(0, 0, 0, 0.40);
+    --shadow-hero: 0 6px 22px rgba(0, 0, 0, 0.45);
+
+    --meta-bg: rgba(255, 255, 255, 0.06);
+    --hero-accent: var(--blue-500);
+    --logo-sub: var(--blue-400);
+
+    --cta-bg: var(--blue-600);
+    --cta-fg: #ffffff;
+    --cta-hover: var(--blue-500);
+
+    --quote-bg: rgba(74, 144, 226, 0.08);
+    --quote-border: rgba(108, 154, 220, 0.30);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bot) 100%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: "Comfortaa", "Quicksand", "Trebuchet MS", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    transition: background 240ms ease, color 240ms ease;
+  }
+  .mono { font-family: "Fira Mono", ui-monospace, monospace; }
+
+  /* ── Top bar ──────────────────────────────────── */
+  .topbar {
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule);
+    box-shadow: var(--shadow-topbar);
+    transition: background 240ms ease;
+  }
+  .topbar-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 700; font-size: 18px;
+    letter-spacing: -0.005em;
+    color: var(--text-strong);
+    text-decoration: none;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--blue-700);
+    display: grid; place-items: center;
+    color: white;
+    box-shadow: inset 0 -2px 0 rgba(0,0,0,0.18), 0 2px 6px rgba(0, 31, 77, 0.22);
+  }
+  .logo-mark svg { width: 22px; height: 22px; }
+  .logo small {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--logo-sub);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .logo .stack { display: flex; flex-direction: column; line-height: 1.05; }
+
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none;
+    color: var(--ink-2);
+    font-weight: 600;
+    font-size: 13.5px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--panel-alt);
+    transition: color 160ms ease, background 160ms ease;
+  }
+  .back-link:hover { color: var(--text-strong); background: var(--panel); }
+  .back-link svg { width: 14px; height: 14px; }
+
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background: var(--panel-alt);
+    color: var(--ink-2);
+    cursor: pointer;
+    display: grid; place-items: center;
+    transition: background 160ms ease, color 160ms ease, transform 200ms ease;
+  }
+  .theme-toggle:hover { color: var(--text-strong); transform: rotate(-12deg); }
+  .theme-toggle svg { width: 18px; height: 18px; display: block; }
+  .theme-toggle .icon-moon { display: none; }
+  .theme-toggle .icon-sun  { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+  html[data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+
+  /* ── Page wrap ─────────────────────────────── */
+  .page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 40px 28px 80px;
+  }
+
+  /* ── Hero ──────────────────────────────────── */
+  .hero {
+    background: var(--panel);
+    border-radius: 22px;
+    padding: 40px 44px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 36px;
+    align-items: center;
+    box-shadow: var(--shadow-hero);
+    margin-bottom: 44px;
+    border-top: 4px solid var(--hero-accent);
+    overflow: hidden;
+    position: relative;
+    transition: padding 320ms ease, gap 320ms ease;
+  }
+  .hero-left { transition: opacity 280ms ease; }
+  .hero h1 {
+    transition: font-size 320ms ease, margin 320ms ease, color 320ms ease;
+  }
+
+  /* Close activity button (only visible while playing) */
+  .hero-close-activity {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 7px 14px 7px 12px;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
+  }
+  .hero-close-activity:hover {
+    background: var(--chip-bg);
+    color: var(--ink);
+    border-color: var(--chip-fg);
+  }
+  .hero-close-activity:active { transform: scale(0.97); }
+  .hero-close-activity[hidden] { display: none; }
+  .hero-close-activity .x {
+    display: inline-flex;
+    width: 16px; height: 16px;
+    align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--chip-bg);
+    color: var(--chip-fg);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  /* ── Hero · Playing state ─────────────────── */
+  .hero[data-state="playing"] {
+    grid-template-columns: 1fr;
+    padding: 22px 44px 36px;
+    gap: 0;
+  }
+  .hero[data-state="playing"] .hero-visual { display: none; }
+  .hero[data-state="playing"] .hero p.intro,
+  .hero[data-state="playing"] .hero-left p.intro,
+  .hero[data-state="playing"] .cta-row { display: none; }
+  .hero[data-state="playing"] .hero-left { padding-right: 160px; }
+  .hero[data-state="playing"] h1 {
+    font-size: clamp(18px, 1.9vw, 22px) !important;
+    font-weight: 600;
+    margin: 8px 0 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* While the mode selector is the current view, mirror the intro
+     hero so the card keeps the same overall size and harmony:
+     same padding, same big title, two-column visual on the right. */
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) {
+    grid-template-columns: 1.05fr 1fr;
+    gap: 36px;
+    padding: 40px 44px;
+    align-items: center;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .hero-close-activity {
+    top: 18px;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .hero-visual {
+    display: grid;
+    aspect-ratio: 5/4;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .hero-left {
+    padding-right: 0;
+  }
+  /* Title: match the intro state exactly (same font-size + spacing). */
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) h1 {
+    font-size: 48.3091px !important;
+    font-weight: 700;
+    margin: 0 0 14px !important;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  /* Activity panel sits flush under the title — no rule, no extra
+     gap — so the spacing matches the intro's H1 → paragraph rhythm. */
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .hero-activity {
+    margin-top: 0;
+    padding-top: 0;
+    grid-column: 1 / 2;
+    border-top: none;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .act-chooser-title {
+    margin: 0 0 14px;
+    font-size: 15px;
+    color: var(--ink-2);
+    font-weight: 600;
+  }
+  /* Mode options: stack vertically and grow to fill the card so the
+     left column matches the height of the right-side visual. */
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .act-mode-options {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .act-mode-btn {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 20px 22px;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .act-mode-btn .ambi-name {
+    font-size: 16px;
+  }
+  .hero[data-state="playing"]:has(#act-mode-selector:not([hidden])) .act-mode-btn .ambi-desc {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--chip-fg);
+    background: var(--chip-bg);
+    padding: 6px 12px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .eyebrow .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--hero-accent);
+  }
+  .hero h1 {
+    margin: 0 0 14px;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    color: var(--text-strong);
+    text-wrap: balance;
+  }
+  .hero p.intro {
+    margin: 0 0 26px;
+    color: var(--ink-2);
+    font-size: 16.5px;
+    line-height: 1.55;
+    max-width: 52ch;
+    text-wrap: pretty;
+  }
+  .cta-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--cta-bg);
+    color: var(--cta-fg);
+    text-decoration: none;
+    padding: 12px 22px 12px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 6px 18px rgba(0, 77, 152, 0.35);
+    transition: background 160ms ease, transform 220ms ease, box-shadow 220ms ease;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+  .cta:hover {
+    background: var(--cta-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 77, 152, 0.45);
+  }
+  .cta .play-icon {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: white;
+    display: grid; place-items: center;
+    box-shadow: inset 0 -2px 0 rgba(0, 77, 152, 0.18);
+  }
+  .cta .play-icon::after {
+    content: "";
+    width: 0; height: 0;
+    border-left: 10px solid var(--blue-700);
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    margin-left: 3px;
+  }
+  .cta-note {
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* hero visual — bigger version of the card thumb */
+  .hero-visual {
+    aspect-ratio: 5/4;
+    border-radius: 18px;
+    background: linear-gradient(135deg, var(--blue-600) 0%, var(--blue-700) 55%, var(--blue-800) 100%);
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  }
+  .hero-visual::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 36px 36px;
+    pointer-events: none;
+  }
+  .hero-visual::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 28% 26%, rgba(255,255,255,0.30) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hv-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    user-select: none;
+    padding: 24px;
+  }
+  .hv-content .frac-line {
+    display: flex; align-items: center; justify-content: center;
+    gap: 18px;
+    font-size: clamp(38px, 4.8vw, 56px);
+    font-weight: 700;
+    font-family: "Fira Mono", monospace;
+  }
+  .hv-content .eq-sign {
+    font-size: 0.7em;
+    font-weight: 400;
+    opacity: 0.75;
+  }
+  .hv-content .frac-typeset {
+    display: inline-flex; flex-direction: column; align-items: center;
+    line-height: 1.05;
+  }
+  .hv-content .frac-typeset .num-f { padding: 0 12px 6px; border-bottom: 3px solid white; }
+  .hv-content .frac-typeset .den-f { padding: 6px 12px 0; }
+  .hv-content .frac-typeset sup { font-size: 0.6em; vertical-align: super; line-height: 0; }
+  .hv-content .decpt { color: #ffd54a; }
+  .hv-content .caption {
+    margin-top: 18px;
+    font-family: "Fira Mono", monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    opacity: 0.88;
+  }
+
+  /* floating accent shapes inside hero visual */
+  .hv-float {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.18);
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+  }
+  .hv-float.a { top: 14%; left: 8%; font-size: 24px; transform: rotate(-12deg); }
+  .hv-float.b { bottom: 14%; right: 10%; font-size: 32px; transform: rotate(8deg); }
+  .hv-float.c { top: 60%; left: 6%; font-size: 18px; transform: rotate(20deg); }
+
+  /* ── Section title ────────────────────────────── */
+  .section-title {
+    display: flex; align-items: baseline; gap: 14px;
+    margin: 14px 4px 22px;
+  }
+  .section-title h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-strong);
+    letter-spacing: -0.01em;
+  }
+  .section-title .num {
+    font-family: "Fira Mono", monospace;
+    color: var(--ink-3);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+
+  /* Accordion (collapsible sections) */
+  .accordion {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    margin-bottom: 14px;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    transition: background 240ms ease, box-shadow 240ms ease;
+  }
+  .accordion > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 20px 26px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+    outline: none;
+    transition: background 160ms ease;
+  }
+  .accordion > summary::-webkit-details-marker { display: none; }
+  .accordion > summary:hover { background: var(--panel-alt); }
+  .accordion > summary h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-strong);
+    letter-spacing: -0.01em;
+  }
+  .accordion > summary .num {
+    font-family: "Fira Mono", monospace;
+    color: var(--ink-3);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+  }
+  .accordion > summary .chev {
+    margin-left: auto;
+    width: 12px; height: 12px;
+    border-right: 2.2px solid var(--ink-2);
+    border-bottom: 2.2px solid var(--ink-2);
+    transform: rotate(45deg);
+    transition: transform 260ms cubic-bezier(.2,.7,.2,1), border-color 160ms ease;
+    flex: 0 0 auto;
+  }
+  .accordion[open] > summary .chev {
+    transform: rotate(-135deg) translate(-3px, -3px);
+  }
+  .accordion > summary:hover .chev { border-color: var(--text-strong); }
+  .accordion > .acc-body {
+    padding: 4px 26px 28px;
+    animation: accFadeIn 220ms ease both;
+  }
+  @keyframes accFadeIn {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Objectives grid ──────────────────────────── */
+  .objectives {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .obj {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 22px 22px 22px;
+    box-shadow: var(--shadow-card);
+  }
+  .obj-icon {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    background: var(--chip-bg);
+    color: var(--chip-fg);
+    display: grid; place-items: center;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  .obj h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+  .obj p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+
+  /* ── Definition quote box ────────────────────── */
+  .definition {
+    background: var(--quote-bg);
+    border: 1px solid var(--quote-border);
+    border-radius: 14px;
+    padding: 28px 32px;
+    position: relative;
+  }
+  .definition .label {
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--chip-fg);
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .definition blockquote {
+    margin: 0;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.4;
+    color: var(--text-strong);
+    font-weight: 500;
+    text-wrap: balance;
+  }
+  .definition blockquote em {
+    background: linear-gradient(180deg, transparent 60%, rgba(255, 213, 74, 0.30) 60%);
+    font-style: normal;
+    font-weight: 700;
+    padding: 0 2px;
+  }
+
+  /* ── Anatomy diagram ─────────────────────────── */
+  .anatomy {
+    padding: 4px 0 0;
+  }
+  .anatomy h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+  .anatomy .sub {
+    margin: 0 0 30px;
+    color: var(--ink-2);
+    font-size: 14.5px;
+  }
+  .anatomy-number {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0;
+    margin: 18px 0 40px;
+    flex-wrap: wrap;
+  }
+  .digit {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .digit .glyph {
+    font-family: "Fira Mono", monospace;
+    font-size: clamp(56px, 7vw, 88px);
+    font-weight: 700;
+    color: var(--text-strong);
+    line-height: 1;
+    padding: 0 4px;
+  }
+  .digit .glyph.dec { color: #ffd54a; }
+  .digit .tag {
+    margin-top: 18px;
+    font-family: "Fira Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .digit::before {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%; transform: translateX(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-3);
+    opacity: 0.6;
+  }
+  .anatomy-legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .legend-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    border-left: 3px solid var(--hero-accent);
+    padding: 4px 0 4px 14px;
+  }
+  .legend-item h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+  .legend-item p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+
+  /* ── Bottom nav ──────────────────────────────── */
+  .bottom-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 22px;
+  }
+  .nav-card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 18px 22px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 220ms ease, box-shadow 220ms ease;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .nav-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
+  .nav-card .dir {
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+  .nav-card .title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-strong);
+    letter-spacing: -0.01em;
+  }
+  .nav-card.next { text-align: right; }
+
+  /* ── Footer ──────────────────────────────────── */
+  footer {
+    margin-top: 36px;
+    padding: 22px 6px 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 500;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  footer .right { color: var(--ink-3); font-family: "Fira Mono", monospace; font-size: 12px; }
+
+  /* ── Responsive ──────────────────────────────── */
+  @media (max-width: 880px) {
+    .page { padding: 24px 16px 56px; }
+    .hero { grid-template-columns: 1fr; padding: 28px; gap: 28px; }
+    .hero[data-state="playing"] { padding: 22px 24px 32px; }
+    .hero[data-state="playing"] .hero-left { padding-right: 130px; }
+    .hero-close-activity { top: 14px; right: 16px; padding: 6px 12px 6px 10px; font-size: 12px; }
+    .objectives { grid-template-columns: 1fr; }
+    .anatomy-legend { grid-template-columns: 1fr; }
+    .bottom-nav { grid-template-columns: 1fr; }
+    .topbar-inner { padding: 12px 16px; }
+    .back-link span { display: none; }
+    .logo small { display: none; }
+    .anatomy { padding: 4px 0 0; }
+    .definition { padding: 22px 18px; }
+  }
+
+  /* ── Activity panel (calculator) ──────────── */
+  .hero-activity {
+    grid-column: 1 / -1;
+    padding-top: 22px;
+    margin-top: 18px;
+    border-top: 1px solid var(--rule);
+    animation: accFadeIn 280ms ease both;
+  }
+
+  .act-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .act-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--rule);
+  }
+  .act-label {
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--chip-fg);
+    font-weight: 600;
+  }
+  .act-toggle-wrap { display: flex; align-items: center; gap: 10px; }
+  .act-toggle-lbl {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink-3);
+    transition: color 0.2s;
+  }
+  .act-toggle-lbl.active { color: var(--ink); font-weight: 600; }
+  .act-toggle {
+    position: relative; width: 40px; height: 22px;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .act-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .act-toggle-track {
+    position: absolute; inset: 0;
+    background: var(--rule);
+    border-radius: 11px;
+    transition: background 0.2s;
+    border: 1px solid var(--chip-ghost-border);
+  }
+  .act-toggle input:checked + .act-toggle-track {
+    background: var(--hero-accent);
+    border-color: var(--hero-accent);
+  }
+  .act-toggle-thumb {
+    position: absolute; top: 3px; left: 3px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--panel);
+    transition: left 0.2s;
+    pointer-events: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.22);
+  }
+  .act-toggle input:checked ~ .act-toggle-thumb { left: 21px; }
+
+  .act-fraccion-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 28px;
+    margin-bottom: 14px;
+  }
+  .act-fraccion-wrap > .act-fraccion-bloque { justify-self: end; }
+  .act-fraccion-wrap > .act-igual         { justify-self: center; }
+  .act-fraccion-wrap > .act-resultado-wrap { justify-self: start; }
+  .act-fraccion-bloque { display: flex; flex-direction: column; align-items: center; }
+
+  .act-num-input {
+    font-size: 2.2rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    text-align: center;
+    border: none;
+    background: transparent;
+    color: var(--text-strong);
+    outline: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    caret-color: var(--gold);
+    transition: background 0.18s;
+    min-width: 60px;
+  }
+  .act-num-input::placeholder { color: var(--ink-3); }
+  .act-num-input:hover,
+  .act-num-input:focus { background: var(--panel-alt); }
+
+  .act-linea-div {
+    height: 2.5px;
+    background: var(--text-strong);
+    opacity: 0.55;
+    margin: 8px 0;
+    border-radius: 2px;
+  }
+
+  .act-den-wrap { position: relative; display: flex; align-items: center; }
+  .act-den-selector {
+    font-size: 2.2rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    text-align: center;
+    background: transparent;
+    color: var(--text-strong);
+    border: none;
+    outline: none;
+    padding: 4px 30px 4px 8px;
+    cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+    border-radius: 8px;
+    transition: background 0.18s;
+    min-width: 60px;
+  }
+  .act-den-selector:hover,
+  .act-den-selector:focus { background: var(--panel-alt); }
+  .act-den-selector option {
+    background: var(--panel);
+    color: var(--ink);
+    font-family: "Fira Mono", monospace;
+    font-size: 1rem;
+  }
+  .act-den-arrow {
+    position: absolute; right: 4px;
+    pointer-events: none;
+    color: var(--ink-3);
+  }
+
+  .act-igual {
+    font-family: "Fira Mono", monospace;
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: var(--ink-3);
+    flex-shrink: 0;
+  }
+  .act-resultado-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .act-resultado {
+    font-size: 2.4rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .act-parte-entera { color: var(--text-strong); }
+  .act-parte-decimal { color: var(--gold); }
+  .act-resultado-dash { color: var(--ink-3); }
+  .act-resultado-label {
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+
+  .act-error {
+    font-size: 12.5px;
+    color: #e05252;
+    min-height: 1.2em;
+    font-weight: 500;
+    text-align: center;
+  }
+  .act-explicacion {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: var(--quote-bg);
+    border: 1px solid var(--quote-border);
+    border-left: 3px solid var(--gold);
+    border-radius: 10px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    display: none;
+  }
+  .act-explicacion.visible { display: block; }
+  .act-explicacion strong { color: var(--text-strong); font-weight: 600; }
+  .act-explicacion .exp-decimal { color: var(--gold); font-weight: 600; }
+
+  #act-ruler {
+    position: fixed;
+    top: -9999px; left: -9999px;
+    visibility: hidden;
+    white-space: nowrap;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: "Fira Mono", monospace;
+  }
+
+  /* ── Mode selector ─────────────────────────── */
+  .act-mode-selector {
+    /* hereda la separación del contenedor .hero-activity */
+  }
+  .act-chooser-label {
+    display: block;
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--chip-fg);
+    font-weight: 600;
+  }
+  .act-chooser-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-strong);
+    margin: 6px 0 18px;
+    letter-spacing: -0.01em;
+  }
+  .act-mode-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .act-mode-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 18px 20px;
+    background: var(--panel-alt);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 160ms ease;
+    box-shadow: var(--shadow-card);
+  }
+  .act-mode-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: var(--hero-accent);
+  }
+  .act-mode-btn:focus-visible {
+    outline: 2px solid var(--hero-accent);
+    outline-offset: 2px;
+  }
+  .ambi-arrow {
+    font-size: 15px;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    color: var(--hero-accent);
+    background: var(--chip-bg);
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .ambi-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-strong);
+    letter-spacing: -0.01em;
+  }
+  .ambi-desc {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.45;
+  }
+
+  /* ── Back button ─────────────────────────── */
+  .act-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 0 0 18px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: color 160ms ease;
+  }
+  .act-back-btn:hover { color: var(--hero-accent); }
+
+  /* ── Mode content wrappers ───────────────── */
+  #act-mode-A,
+  #act-mode-B {
+    animation: accFadeIn 220ms ease both;
+  }
+
+  /* ── Mode B: Decimal → Fracción ──────────── */
+  .atf-conv-wrap {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    column-gap: 28px;
+    margin-bottom: 14px;
+  }
+  .atf-conv-wrap > .atf-dec-bloque  { justify-self: end; }
+  .atf-conv-wrap > .act-igual       { justify-self: center; }
+  .atf-conv-wrap > .atf-frac-bloque { justify-self: start; }
+  .atf-dec-bloque,
+  .atf-frac-bloque { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+  .atf-dec-input {
+    font-size: 2.2rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    text-align: center;
+    border: none;
+    background: transparent;
+    color: var(--text-strong);
+    outline: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    caret-color: var(--gold);
+    transition: background 0.18s;
+    min-width: 60px;
+  }
+  .atf-dec-input::placeholder { color: var(--ink-3); }
+  .atf-dec-input:hover,
+  .atf-dec-input:focus { background: var(--panel-alt); }
+
+  .atf-dec-sublabel,
+  .atf-frac-sublabel {
+    font-family: "Fira Mono", monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    min-height: 1em;
+  }
+
+  .atf-frac-resultado {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .atf-frac-num {
+    font-size: 2.2rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    color: var(--gold);
+    padding: 0 10px 8px;
+    text-align: center;
+    min-width: 60px;
+    border-bottom: 3px solid var(--ink-2);
+    line-height: 1.1;
+  }
+  .atf-frac-den {
+    font-size: 2.2rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 700;
+    color: var(--text-strong);
+    padding: 8px 10px 0;
+    text-align: center;
+    min-width: 60px;
+    line-height: 1.1;
+  }
+  .atf-frac-dash {
+    font-size: 2.2rem;
+    font-family: "Fira Mono", monospace;
+    font-weight: 400;
+    color: var(--ink-3);
+    padding: 8px 10px;
+  }
+
+  #atf-ruler {
+    position: fixed;
+    top: -9999px; left: -9999px;
+    visibility: hidden;
+    white-space: nowrap;
+    font-size: 2.2rem;
+    font-weight: 700;
+    font-family: "Fira Mono", monospace;
+  }
+
+  @media (max-width: 880px) {
+    .act-num-input, .act-den-selector { font-size: 1.7rem; }
+    .act-igual, .act-resultado { font-size: 1.9rem; }
+    .act-fraccion-wrap {
+      grid-template-columns: 1fr;
+      row-gap: 8px;
+      justify-items: center;
+    }
+    .act-fraccion-wrap > .act-fraccion-bloque,
+    .act-fraccion-wrap > .act-igual,
+    .act-fraccion-wrap > .act-resultado-wrap { justify-self: center; }
+    .act-mode-options { grid-template-columns: 1fr; }
+    .atf-dec-input, .atf-frac-num, .atf-frac-den, .atf-frac-dash { font-size: 1.7rem; }
+    .atf-conv-wrap {
+      grid-template-columns: 1fr;
+      row-gap: 8px;
+      justify-items: center;
+    }
+    .atf-conv-wrap > .atf-dec-bloque,
+    .atf-conv-wrap > .act-igual,
+    .atf-conv-wrap > .atf-frac-bloque { justify-self: center; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="logo" href="../Finite Decimals.html">
+        <div class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="2.4" fill="white" stroke="none"/>
+            <ellipse cx="12" cy="12" rx="9" ry="3.6"/>
+            <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/>
+            <ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/>
+          </svg>
+        </div>
+        <div class="stack">
+          <span>STEM Learning Tools</span>
+        </div>
+      </a>
+      <div class="topbar-right">
+        <a class="back-link" href="../Finite Decimals.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+          <span>Volver al inicio</span>
+        </a>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar tema" title="Cambiar tema">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page" data-screen-label="Módulo 01 · Definición">
+
+    <!-- Hero -->
+    <section class="hero" data-state="intro">
+      <button class="hero-close-activity" type="button" id="hero-close-activity" hidden>
+        <span class="x" aria-hidden="true">✕</span>
+        <span>Cerrar actividad</span>
+      </button>
+      <div class="hero-left">
+        <span class="eyebrow"><span class="dot"></span>Definición</span>
+        <h1>¿Qué es un decimal finito?</h1>
+        <p class="intro">Toda fracción con denominador potencia entera no negativa de 10 admite una notación compacta —un punto y unos pocos dígitos— conocida como notación decimal.</p>
+        <div class="cta-row">
+          <button class="cta" type="button">
+            <span class="play-icon" aria-hidden="true"></span>
+            <span>Empezar actividad</span>
+          </button>
+          <span class="cta-note">~5 minutos · Interactivo</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <span class="hv-float a">10²</span>
+        <span class="hv-float b">10⁻³</span>
+        <span class="hv-float c">·</span>
+        <div class="hv-content">
+          <div class="frac-line">
+            <span class="frac-typeset">
+              <span class="num-f">375</span>
+              <span class="den-f">10<sup>3</sup></span>
+            </span>
+            <span class="eq-sign">=</span>
+            <span>0<span class="decpt">.</span>375</span>
+          </div>
+          <div class="caption">una fracción · un decimal</div>
+        </div>
+      </div>
+
+      <!-- Activity panel -->
+      <div class="hero-activity" id="hero-activity" hidden>
+
+        <!-- Selector de modo -->
+        <div class="act-mode-selector" id="act-mode-selector">
+          <p class="act-chooser-title">¿Cómo quieres practicar?</p>
+          <div class="act-mode-options">
+            <button class="act-mode-btn" type="button" data-mode="A">
+              <span class="ambi-name">Fracción → Decimal</span>
+              <span class="ambi-desc">Elige numerador y denominador (potencia de 10) y observa el decimal resultante.</span>
+            </button>
+            <button class="act-mode-btn" type="button" data-mode="B">
+              <span class="ambi-name">Decimal → Fracción</span>
+              <span class="ambi-desc">Escribe un decimal finito y obtén su fracción con denominador potencia de 10.</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Modo A: Fracción → Decimal -->
+        <div id="act-mode-A" hidden>
+          <button class="act-back-btn" id="act-back-A" type="button">← Cambiar modo</button>
+          <div class="act-header">
+            <span class="act-label">Fracción → Decimal</span>
+          </div>
+          <div class="act-fraccion-wrap">
+            <div class="act-fraccion-bloque">
+              <input class="act-num-input" type="text" inputmode="numeric" id="act-numerador" placeholder="0" aria-label="Numerador" />
+              <div class="act-linea-div" id="act-linea-den"></div>
+              <div class="act-den-wrap">
+                <select class="act-den-selector" id="act-denominador" aria-label="Denominador"></select>
+                <svg class="act-den-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <span class="act-igual" aria-hidden="true">=</span>
+            <div class="act-resultado-wrap">
+              <div class="act-resultado" id="act-resultado" aria-live="polite"><span class="act-resultado-dash">—</span></div>
+              <div class="act-resultado-label" id="act-label-resultado"></div>
+            </div>
+          </div>
+          <div class="act-error" id="act-error" role="alert"></div>
+          <div class="act-explicacion" id="act-explicacion"></div>
+          <div class="act-controls">
+            <span class="act-toggle-lbl active" id="act-lbl-normal">Notación estándar</span>
+            <label class="act-toggle" aria-label="Cambiar notación del denominador">
+              <input type="checkbox" id="act-toggle-potencia" />
+              <div class="act-toggle-track"></div>
+              <div class="act-toggle-thumb"></div>
+            </label>
+            <span class="act-toggle-lbl" id="act-lbl-potencia">Notación potencia</span>
+          </div>
+        </div>
+
+        <!-- Modo B: Decimal → Fracción -->
+        <div id="act-mode-B" hidden>
+          <button class="act-back-btn" id="act-back-B" type="button">← Cambiar modo</button>
+          <div class="act-header">
+            <span class="act-label">Decimal → Fracción</span>
+          </div>
+          <div class="atf-conv-wrap">
+            <div class="atf-dec-bloque">
+              <input class="atf-dec-input" type="text" inputmode="decimal" id="atf-dec-input"
+                     placeholder="0.0" autocomplete="off" spellcheck="false" aria-label="Decimal finito" />
+              <div class="atf-dec-sublabel" id="atf-dec-sublabel"></div>
+            </div>
+            <span class="act-igual" aria-hidden="true">=</span>
+            <div class="atf-frac-bloque">
+              <div class="atf-frac-resultado" id="atf-frac-resultado">
+                <div class="atf-frac-dash">—</div>
+              </div>
+              <div class="atf-frac-sublabel" id="atf-frac-sublabel"></div>
+            </div>
+          </div>
+          <div class="act-error" id="atf-error" role="alert"></div>
+          <div class="act-explicacion" id="atf-explicacion"></div>
+          <div class="act-controls">
+            <span class="act-toggle-lbl active" id="atf-lbl-normal">Notación estándar</span>
+            <label class="act-toggle" aria-label="Cambiar notación del denominador">
+              <input type="checkbox" id="atf-toggle-potencia" />
+              <div class="act-toggle-track"></div>
+              <div class="act-toggle-thumb"></div>
+            </label>
+            <span class="act-toggle-lbl" id="atf-lbl-potencia">Notación potencia</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <span id="act-ruler" aria-hidden="true">AAAAAAAAAAAA</span>
+    <span id="atf-ruler" aria-hidden="true">AAAAAAAAAAAA</span>
+
+    <!-- Objectives -->
+    <details class="accordion">
+      <summary>
+        <h2>¿Qué vas a explorar?</h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+      <div class="acc-body">
+        <section class="objectives">
+      <div class="obj">
+        <div class="obj-icon">A</div>
+        <h3>Reconocer la forma</h3>
+        <p>Identificar un decimal finito por su definición: una fracción cuyo denominador es una potencia entera no negativa de 10.</p>
+      </div>
+      <div class="obj">
+        <div class="obj-icon">B</div>
+        <h3>Construir la notación</h3>
+        <p>Pasar de la notación de fracción a la notación decimal: agregar un punto entre los dígitos del numerador, dejando a la derecha tantos dígitos como ceros tenga el denominador.</p>
+      </div>
+      <div class="obj">
+        <div class="obj-icon">C</div>
+        <h3>Nombrar las partes</h3>
+        <p>Distinguir parte entera, punto decimal y dígitos decimales: el vocabulario formal con que la definición nombra cada componente.</p>
+      </div>
+      </section>
+      </div>
+    </details>
+
+    <!-- Definition -->
+    <details class="accordion">
+      <summary>
+        <h2>Definición de decimal finito</h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+      <div class="acc-body">
+        <section class="definition">
+      <div class="label">Decimal finito</div>
+      <blockquote>
+        Un decimal finito es una <em>fracción</em> cuyo denominador es una <em>potencia entera no negativa de 10</em>. Su notación decimal se obtiene escribiendo el numerador con un punto en la posición que iguala los dígitos a la derecha con los ceros del denominador.
+      </blockquote>
+      </section>
+      </div>
+    </details>
+
+    <!-- Anatomy -->
+    <details class="accordion">
+      <summary>
+        <h2>Anatomía de un decimal finito</h2>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+      <div class="acc-body">
+        <section class="anatomy">
+      <h3>Tomemos como ejemplo el número 12.345</h3>
+      <p class="sub">Cada parte tiene un nombre y un papel específico dentro de la definición.</p>
+
+      <div class="anatomy-number" aria-label="Número 12.345 descompuesto">
+        <span class="digit"><span class="glyph">1</span></span>
+        <span class="digit"><span class="glyph">2</span></span>
+        <span class="digit"><span class="glyph dec">.</span></span>
+        <span class="digit"><span class="glyph">3</span></span>
+        <span class="digit"><span class="glyph">4</span></span>
+        <span class="digit"><span class="glyph">5</span></span>
+      </div>
+
+      <div class="anatomy-legend">
+        <div class="legend-item">
+          <div>
+            <h4>Parte entera</h4>
+            <p>Los dígitos a la izquierda del punto. Aquí: <span class="mono">12</span>.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div>
+            <h4>Punto decimal</h4>
+            <p>El símbolo que separa la parte entera de los dígitos decimales.</p>
+          </div>
+        </div>
+        <div class="legend-item">
+          <div>
+            <h4>Dígitos decimales</h4>
+            <p>Los dígitos a la derecha del punto. Aquí: <span class="mono">345</span> — tres dígitos, denominador <span class="mono">10³</span>.</p>
+          </div>
+        </div>
+      </div>
+      </section>
+      </div>
+    </details>
+
+    <!-- Bottom nav -->
+    <nav class="bottom-nav" aria-label="Navegación entre actividades">
+      <a class="nav-card" href="../Finite Decimals.html">
+        <span class="dir">← Inicio</span>
+        <span class="title">Todas las actividades</span>
+      </a>
+      <a class="nav-card next" href="representacion-alternativa.html">
+        <span class="dir">Siguiente · 02 →</span>
+        <span class="title">Representación alternativa</span>
+      </a>
+    </nav>
+
+    <footer>
+      <span class="left">STEM Learning Tools · Creado por Abdiel Ríos</span>
+      <span class="right">Módulo 01 · v0.1</span>
+    </footer>
+
+  </main>
+
+  <script>
+    (function() {
+      const root = document.documentElement;
+      const KEY = 'sltools-theme';
+      try {
+        const saved = localStorage.getItem(KEY);
+        if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
+      } catch (e) {}
+      const btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          try { localStorage.setItem(KEY, next); } catch (e) {}
+        });
+      }
+    })();
+  </script>
+
+  <script>
+  (function () {
+    var potencias = [0,1,2,3,4,5,6,7,8,9,10];
+    var sup = ['⁰','¹','²','³','⁴','⁵','⁶','⁷','⁸','⁹','¹⁰'];
+
+    function actFmtNum(n) {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+    function actOpcionTexto(exp, usePotencia) {
+      return usePotencia ? '10' + sup[exp] : actFmtNum(Math.pow(10, exp));
+    }
+    function actAplicarAncho(w) {
+      var px = w + 'px';
+      document.getElementById('act-numerador').style.width = px;
+      document.getElementById('act-denominador').style.width = px;
+      document.getElementById('act-linea-den').style.width = px;
+    }
+    function actPoblarSelect(usePotencia) {
+      var sel = document.getElementById('act-denominador');
+      var curVal = sel.value || '100';
+      sel.innerHTML = '';
+      potencias.forEach(function (exp) {
+        var opt = document.createElement('option');
+        opt.value = Math.pow(10, exp);
+        opt.textContent = actOpcionTexto(exp, usePotencia);
+        sel.appendChild(opt);
+      });
+      sel.value = curVal;
+      if (!sel.value) sel.value = '100';
+    }
+    function actCalcular() {
+      var rawA = document.getElementById('act-numerador').value.trim();
+      var b    = parseInt(document.getElementById('act-denominador').value);
+      var resultadoEl   = document.getElementById('act-resultado');
+      var errorEl       = document.getElementById('act-error');
+      var explicacionEl = document.getElementById('act-explicacion');
+      var labelRes      = document.getElementById('act-label-resultado');
+      var usePotencia   = document.getElementById('act-toggle-potencia').checked;
+      var exp = Math.round(Math.log10(b));
+
+      errorEl.textContent = '';
+      explicacionEl.classList.remove('visible');
+
+      if (rawA === '' || rawA === '-') {
+        resultadoEl.innerHTML = '<span class="act-resultado-dash">—</span>';
+        labelRes.textContent = '';
+        return;
+      }
+      var a = parseInt(rawA);
+      if (isNaN(a)) {
+        errorEl.textContent = 'El numerador debe ser un número entero.';
+        resultadoEl.innerHTML = '<span class="act-resultado-dash">—</span>';
+        return;
+      }
+
+      var decimales = exp;
+      var signo  = a < 0 ? '-' : '';
+      var absNum = Math.abs(a).toString();
+      var htmlRes;
+
+      if (decimales === 0) {
+        htmlRes = '<span class="act-parte-entera">' + signo + actFmtNum(Math.abs(a)) + '</span>';
+        labelRes.textContent = 'número entero';
+      } else {
+        var padded    = absNum.padStart(decimales + 1, '0');
+        var enteraStr = padded.slice(0, padded.length - decimales);
+        var decStr    = padded.slice(padded.length - decimales);
+        htmlRes = '<span class="act-parte-entera">' + signo + actFmtNum(parseInt(enteraStr)) + '.</span>'
+                + '<span class="act-parte-decimal">' + decStr + '</span>';
+        labelRes.textContent = decimales + ' ' + (decimales === 1 ? 'decimal' : 'decimales');
+      }
+      resultadoEl.innerHTML = htmlRes;
+
+      var bLabel = usePotencia ? '10' + sup[exp] : actFmtNum(b);
+      var aLabel = actFmtNum(a);
+      var explic = '<strong>' + aLabel + ' / ' + bLabel + '</strong>: ';
+      if (decimales === 0) {
+        explic += 'el número no cambia (sus dígitos decimales son ceros).';
+      } else {
+        var lugar = decimales === 1 ? 'dígito' : 'dígitos';
+        explic += 'en el numerador, situamos el punto decimal después de <strong>'
+               + decimales + ' ' + lugar + '</strong> contados de derecha a izquierda.';
+        var padded2 = absNum.padStart(decimales + 1, '0');
+        var eStr = padded2.slice(0, padded2.length - decimales);
+        var dStr = padded2.slice(padded2.length - decimales);
+        explic += ' Parte entera: <strong>' + signo + actFmtNum(parseInt(eStr)) + '</strong>'
+               + ' — parte decimal: <strong class="exp-decimal">.' + dStr + '</strong>.';
+      }
+      explicacionEl.innerHTML = explic;
+      explicacionEl.classList.add('visible');
+    }
+    function actActualizarLabels(usePotencia) {
+      document.getElementById('act-lbl-normal').classList.toggle('active', !usePotencia);
+      document.getElementById('act-lbl-potencia').classList.toggle('active', usePotencia);
+    }
+
+    /* ── Modo B: Decimal a Fraccion ──────────── */
+    function atfFmtNum(n) {
+      return Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+    function atfGetExp(raw) {
+      var dot = raw.indexOf('.');
+      return dot === -1 ? 0 : raw.length - dot - 1;
+    }
+    function atfConvertir() {
+      var raw    = document.getElementById('atf-dec-input').value.trim();
+      var resEl  = document.getElementById('atf-frac-resultado');
+      var errEl  = document.getElementById('atf-error');
+      var expEl  = document.getElementById('atf-explicacion');
+      var decSub = document.getElementById('atf-dec-sublabel');
+      var fraSub = document.getElementById('atf-frac-sublabel');
+      var usePot = document.getElementById('atf-toggle-potencia').checked;
+      errEl.textContent = '';
+      expEl.classList.remove('visible');
+      decSub.textContent = '';
+      fraSub.textContent = '';
+      if (raw === '' || raw === '-' || raw === '.' || raw === '-.') {
+        resEl.innerHTML = '<div class="atf-frac-dash">&#8212;</div>'; return;
+      }
+      if (!/^-?\d*\.?\d+$/.test(raw) && !/^-?\d+\.?\d*$/.test(raw)) {
+        errEl.textContent = 'Ingresa un numero decimal valido.';
+        resEl.innerHTML = '<div class="atf-frac-dash">&#8212;</div>'; return;
+      }
+      var exp = atfGetExp(raw);
+      var isNeg = raw.startsWith('-');
+      var numStr = raw.replace('.', '');
+      var absStr = numStr.replace('-', '');
+      if (absStr === '') { resEl.innerHTML = '<div class="atf-frac-dash">&#8212;</div>'; return; }
+      var numerator   = parseInt(numStr, 10);
+      var denominator = Math.pow(10, exp);
+      if (isNaN(numerator)) {
+        errEl.textContent = 'Ingresa un numero decimal valido.';
+        resEl.innerHTML = '<div class="atf-frac-dash">&#8212;</div>'; return;
+      }
+      var expSup = exp <= 10 ? sup[exp] : ('^' + exp);
+      var denLabel = usePot ? '10' + expSup : atfFmtNum(denominator);
+      var numLabel = (isNeg ? '−' : '') + atfFmtNum(Math.abs(numerator));
+      resEl.innerHTML =
+        '<div class="atf-frac-num">' + numLabel + '</div>' +
+        '<div class="atf-frac-den">' + denLabel + '</div>';
+      decSub.textContent = 'decimal finito';
+      fraSub.textContent = exp === 0 ? 'numero entero' : exp + ' ' + (exp === 1 ? 'decimal' : 'decimales');
+      var rawDisp = raw.replace('-', '−');
+      var txt = '<strong>' + rawDisp + '</strong>: ';
+      if (exp === 0) {
+        txt += 'no tiene digitos decimales, el denominador es <span class="exp-decimal">10⁰ = 1</span>. '
+             + 'Numerador: <span class="exp-decimal">' + numLabel + '</span>.';
+      } else {
+        var lg = exp === 1 ? 'digito decimal' : 'digitos decimales';
+        txt += 'tiene <strong>' + exp + ' ' + lg + '</strong>, '
+             + 'denominador: <span class="exp-decimal">10' + expSup + ' = ' + atfFmtNum(denominator) + '</span>. '
+             + 'Eliminando el punto: numerador <span class="exp-decimal">' + numLabel + '</span>.';
+      }
+      expEl.innerHTML = txt;
+      expEl.classList.add('visible');
+    }
+    function atfActualizarLabels(usePotencia) {
+      document.getElementById('atf-lbl-normal').classList.toggle('active', !usePotencia);
+      document.getElementById('atf-lbl-potencia').classList.toggle('active', usePotencia);
+    }
+
+    /* ── Selector de modo ─────────────────────── */
+    function showSelector() {
+      document.getElementById('act-mode-selector').removeAttribute('hidden');
+      document.getElementById('act-mode-A').setAttribute('hidden', '');
+      document.getElementById('act-mode-B').setAttribute('hidden', '');
+    }
+    function showMode(m) {
+      document.getElementById('act-mode-selector').setAttribute('hidden', '');
+      document.getElementById('act-mode-A')[m === 'A' ? 'removeAttribute' : 'setAttribute']('hidden', '');
+      document.getElementById('act-mode-B')[m === 'B' ? 'removeAttribute' : 'setAttribute']('hidden', '');
+    }
+
+    /* ── CTA / Close — state toggle ───────────── */
+    var ctaBtn    = document.querySelector('.cta');
+    var actPanel  = document.getElementById('hero-activity');
+    var heroEl    = document.querySelector('.hero');
+    var closeBtn  = document.getElementById('hero-close-activity');
+
+    function openActivity() {
+      if (!heroEl || !actPanel) return;
+      heroEl.setAttribute('data-state', 'playing');
+      actPanel.removeAttribute('hidden');
+      if (closeBtn) closeBtn.removeAttribute('hidden');
+      showSelector();
+    }
+    function closeActivity() {
+      if (!heroEl || !actPanel) return;
+      heroEl.setAttribute('data-state', 'intro');
+      actPanel.setAttribute('hidden', '');
+      if (closeBtn) closeBtn.setAttribute('hidden', '');
+      showSelector();
+    }
+
+    if (ctaBtn)   ctaBtn.addEventListener('click', openActivity);
+    if (closeBtn) closeBtn.addEventListener('click', closeActivity);
+
+    /* ── Init ─────────────────────────────────── */
+    window.addEventListener('load', function () {
+      // Botones de modo
+      document.querySelectorAll('.act-mode-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () { showMode(this.dataset.mode); });
+      });
+      document.getElementById('act-back-A').addEventListener('click', showSelector);
+      document.getElementById('act-back-B').addEventListener('click', showSelector);
+
+      // Modo A init
+      var rulerA = document.getElementById('act-ruler');
+      var wA = rulerA ? rulerA.offsetWidth : 160;
+      if (rulerA) rulerA.style.display = 'none';
+      actPoblarSelect(false);
+      actActualizarLabels(false);
+      actAplicarAncho(wA);
+
+      var numInput = document.getElementById('act-numerador');
+      numInput.addEventListener('keydown', function (e) {
+        var nav = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+        if (nav.indexOf(e.key) !== -1) return;
+        if (e.key === '-' && this.selectionStart === 0 && !this.value.includes('-')) return;
+        if (!/^\d$/.test(e.key)) { e.preventDefault(); return; }
+        if (this.value.replace('-', '').length >= 10) e.preventDefault();
+      });
+      numInput.addEventListener('input', function () {
+        var val = this.value.replace(/[^\d-]/g, '');
+        if (val.indexOf('-') > 0) val = val.replace(/-/g, '');
+        else val = val.replace(/(?!^)-/g, '');
+        var digits = val.replace('-', '');
+        if (digits.length > 10) val = (val.startsWith('-') ? '-' : '') + digits.slice(0, 10);
+        this.value = val;
+        actCalcular();
+      });
+      document.getElementById('act-toggle-potencia').addEventListener('change', function () {
+        actActualizarLabels(this.checked);
+        actPoblarSelect(this.checked);
+        actCalcular();
+      });
+      document.getElementById('act-denominador').addEventListener('change', actCalcular);
+
+      // Modo B init
+      var rulerB = document.getElementById('atf-ruler');
+      var wB = rulerB ? rulerB.offsetWidth : 160;
+      if (rulerB) rulerB.style.display = 'none';
+      var decInput = document.getElementById('atf-dec-input');
+      if (decInput) decInput.style.width = wB + 'px';
+      atfActualizarLabels(false);
+
+      if (decInput) {
+        decInput.addEventListener('keydown', function (e) {
+          var nav = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+          if (nav.indexOf(e.key) !== -1) return;
+          if (e.key === '-' && this.selectionStart === 0 && !this.value.includes('-')) return;
+          if ((e.key === '.' || e.key === ',') && !this.value.replace('-','').includes('.')) return;
+          if (!/^\d$/.test(e.key)) { e.preventDefault(); return; }
+          if (this.value.replace(/\D/g,'').length >= 10) e.preventDefault();
+        });
+        decInput.addEventListener('input', function () {
+          var val = this.value.replace(',', '.');
+          var isNeg = val.startsWith('-');
+          val = val.replace(/[^\d.]/g, '');
+          var fd = val.indexOf('.');
+          if (fd !== -1) val = val.slice(0, fd + 1) + val.slice(fd + 1).replace(/\./g, '');
+          var digFound = 0, capped = '';
+          for (var i = 0; i < val.length; i++) {
+            var ch = val[i];
+            if (/\d/.test(ch)) { if (digFound >= 10) continue; digFound++; }
+            capped += ch;
+          }
+          this.value = (isNeg ? '-' : '') + capped;
+          atfConvertir();
+        });
+      }
+      document.getElementById('atf-toggle-potencia').addEventListener('change', function () {
+        atfActualizarLabels(this.checked);
+        atfConvertir();
+      });
+    });
+  })();
+  </script>
+
+</body>
+</html>
